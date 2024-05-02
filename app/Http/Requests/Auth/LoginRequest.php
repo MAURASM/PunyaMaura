@@ -12,7 +12,8 @@ use Illuminate\Validation\ValidationException;
 class LoginRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
+     * Menentukan apakah pengguna berwenang untuk membuat permintaan ini.
+     * Dalam kasus ini, semua pengguna diizinkan.
      */
     public function authorize(): bool
     {
@@ -20,9 +21,9 @@ class LoginRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
+     * Mendapatkan aturan validasi yang berlaku untuk permintaan.
+     * Email dan password diperlukan dan harus berupa string.
+     * Email juga harus berformat email yang valid.
      */
     public function rules(): array
     {
@@ -33,9 +34,8 @@ class LoginRequest extends FormRequest
     }
 
     /**
-     * Attempt to authenticate the request's credentials.
-     *
-     * @throws \Illuminate\Validation\ValidationException
+     * Mencoba untuk mengautentikasi kredensial permintaan.
+     * Jika autentikasi gagal, hitung jumlah percobaan login dan lempar exception.
      */
     public function authenticate(): void
     {
@@ -49,13 +49,13 @@ class LoginRequest extends FormRequest
             ]);
         }
 
+        // Jika autentikasi berhasil, hapus hitungan percobaan login
         RateLimiter::clear($this->throttleKey());
     }
 
     /**
-     * Ensure the login request is not rate limited.
-     *
-     * @throws \Illuminate\Validation\ValidationException
+     * Memastikan permintaan login tidak dibatasi rate.
+     * Jika terlalu banyak percobaan, lempar exception.
      */
     public function ensureIsNotRateLimited(): void
     {
@@ -63,6 +63,7 @@ class LoginRequest extends FormRequest
             return;
         }
 
+        // Jika terlalu banyak percobaan, buat event Lockout
         event(new Lockout($this));
 
         $seconds = RateLimiter::availableIn($this->throttleKey());
@@ -76,7 +77,8 @@ class LoginRequest extends FormRequest
     }
 
     /**
-     * Get the rate limiting throttle key for the request.
+     * Mendapatkan kunci throttle untuk pembatasan rate permintaan.
+     * Kunci ini unik untuk setiap kombinasi email dan IP.
      */
     public function throttleKey(): string
     {
