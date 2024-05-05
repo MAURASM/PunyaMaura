@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\ProductCategory;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\UserType;
@@ -42,5 +43,25 @@ class DatabaseSeeder extends Seeder
         ]); */
 
         User::factory(4)->create();
+
+        ProductCategory::create([
+            'name' => 'Fashion',
+            'slug' => 'fashion'
+        ]);
+
+        ProductCategory::create([
+            'name' => 'Kecantikan',
+            'slug' => 'kecantikan'
+        ]);
+
+        ProductCategory::create([
+            'name' => 'Makanan',
+            'slug' => 'makanan'
+        ]);
+
+        ProductCategory::create([
+            'name' => 'Mainan & Hobi',
+            'slug' => 'mainan-hobi'
+        ]);
     }
 }

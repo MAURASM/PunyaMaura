@@ -12,7 +12,7 @@
       <div class="items-center block w-auto max-h-screen overflow-auto h-sidenav grow basis-full">
         <ul class="flex flex-col pl-0 mb-0">
           <li class="mt-0.5 w-full">
-            <a class="py-2.7 bg-blue-500/13 dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap rounded-lg px-4 font-semibold text-slate-700 transition-colors" href="./pages/dashboard.html">
+            <a class=" px-4 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap {{ Request::is('admin') ? 'bg-blue-500/13 dark:text-white dark:opacity-80 rounded-lg font-semibold text-slate-700 transition-colors' : '' }} " href="/admin">
               <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
                 <i class="relative top-0 text-sm leading-normal text-blue-500 ni ni-tv-2"></i>
               </div>
@@ -30,16 +30,25 @@
           </li>
 
           <li class="mt-0.5 w-full">
-            <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors" href="./pages/billing.html">
-              <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center fill-current stroke-0 text-center xl:p-2.5">
-                <i class="relative top-0 text-sm leading-normal text-slate-700 ni ni-credit-card"></i>
+            <a class=" px-4 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap {{ Request::is('admin/product-categories') ? 'bg-blue-500/13 dark:text-white dark:opacity-80 rounded-lg font-semibold text-slate-700 transition-colors' : '' }} " href="/admin/product-categories">
+              <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+                <i class="relative top-0 text-sm leading-normal text-slate-700 ni ni-bullet-list-67"></i>
               </div>
-              <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Payments</span>
+              <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Product Categories</span>
             </a>
           </li>
 
           <li class="mt-0.5 w-full">
-            <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors" href="#">
+            <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors" href="./pages/billing.html">
+              <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center fill-current stroke-0 text-center xl:p-2.5">
+                <i class="relative top-0 text-sm leading-normal text-slate-700 ni ni-credit-card"></i>
+              </div>
+              <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Orders</span>
+            </a>
+          </li>
+
+          <li class="mt-0.5 w-full">
+            <a class=" px-4 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap {{ Request::is('admin/users') ? 'bg-blue-500/13 dark:text-white dark:opacity-80 rounded-lg font-semibold text-slate-700 transition-colors' : '' }} " href="/admin/users">
               <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
                 <i class="relative top-0 text-sm leading-normal text-slate-700 ni ni-single-02"></i>
               </div>
@@ -53,6 +62,15 @@
                 <i class="relative top-0 text-sm leading-normal text-slate-700 ni ni-chat-round"></i>
               </div>
               <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Chats</span>
+            </a>
+          </li>
+
+          <li class="mt-0.5 w-full">
+            <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors" href="#">
+              <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+                <i class="relative top-0 text-sm leading-normal text-slate-700 ni ni-single-copy-04"></i>
+              </div>
+              <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Articles</span>
             </a>
           </li>
 
@@ -73,9 +91,9 @@
               <li class="text-sm leading-normal">
                 <a class="text-white opacity-50" href="javascript:;">Pages</a>
               </li>
-              <li class="text-sm pl-2 capitalize leading-normal text-white before:float-left before:pr-2 before:text-white before:content-['/']" aria-current="page">Dashboard</li>
+              <li class="text-sm pl-2 capitalize leading-normal text-white before:float-left before:pr-2 before:text-white before:content-['/']" aria-current="page">{{ $title }}</li>
             </ol>
-            <h6 class="mb-0 font-bold text-white capitalize">Dashboard</h6>
+            <h6 class="mb-0 font-bold text-white capitalize">{{ $title }}</h6>
           </nav>
 
           <div class="flex items-center mt-2 grow sm:mt-0 sm:mr-6 md:mr-0 lg:flex lg:basis-auto">
@@ -181,6 +199,21 @@
                     </a>
                   </li>
                 </ul>
+              </li>
+
+              <!--Logout-->
+
+              <li class="relative flex items-center pr-2">
+                <form method="POST" action="{{ route('logout') }}">
+                  @csrf
+
+                  {{-- <x-dropdown-link :href="route('logout')"
+                          onclick="event.preventDefault();
+                                      this.closest('form').submit();">
+                      {{ __('Log Out') }}
+                  </x-dropdown-link> --}}
+                  <button class="text-white">Log out</button>
+              </form>
               </li>
             </ul>
           </div>
