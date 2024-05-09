@@ -7,7 +7,13 @@
         <div class="flex-none w-full max-w-full px-3">
           <div class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
             <div class="p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent">
-                <a href="/admin/users/create" class="inline-block min-w-min px-5 py-2.5 mt-6 mb-2 font-bold text-center text-white align-middle transition-all bg-transparent border-0 rounded-lg cursor-pointer active:opacity-85 hover:-translate-y-px hover:shadow-xs leading-normal text-sm ease-in tracking-tight-rem shadow-md bg-150 bg-x-25 bg-gradient-to-tl from-zinc-800 to-zinc-700 hover:border-slate-700 hover:bg-slate-700 hover:text-white">Create New User</a>
+              @if (session()->has('success'))
+                        <div class="bg-emerald-500 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                            <span class="block sm:inline">{{ session('success') }}</span>
+                          </div>
+                        @endif
+                        <p class="font-bold">{{ $title }}</p>
+                        <a href="/admin/users/create" class="inline-block min-w-min px-5 py-2.5 mt-3 mb-2 font-bold text-center text-white align-middle transition-all bg-transparent border-0 rounded-lg cursor-pointer active:opacity-85 hover:-translate-y-px hover:shadow-xs leading-normal text-sm ease-in tracking-tight-rem shadow-md bg-150 bg-x-25 bg-gradient-to-tl from-zinc-800 to-zinc-700 hover:border-slate-700 hover:bg-slate-700 hover:text-white">Create New User</a>
             </div>
             <div class="flex-auto px-0 pt-0 pb-2">
               <div class="p-0 overflow-x-auto">
@@ -51,8 +57,12 @@
                         </span>
                         </td>
                         <td class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                          <a href="javascript:;" class="text-xs font-semibold leading-tight dark:text-white dark:opacity-80 text-slate-400"> Edit </a>
-                          <a href="javascript:;" class="text-xs font-semibold leading-tight dark:text-white dark:opacity-80 text-slate-400"> Delete </a>
+                          <a href="/admin/users/{{ $user->id }}/edit" class="text-xs font-semibold leading-tight dark:text-white dark:opacity-80 text-slate-400"> Edit </a>
+                          <form action="/admin/users/{{ $user->id }}" method="post" class="d-inline">
+                            @method('delete')
+                            @csrf
+                            <button class="text-xs font-semibold leading-tight dark:text-white dark:opacity-80 text-red-500" onclick="return confirm('Are you sure?')">Delete</button>
+                        </form>
                         </td>
                       </tr>
                     @endforeach

@@ -2,17 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 
-
-class Topic extends Model
+class Product extends Model
 {
     use HasFactory, Sluggable;
 
-    protected $guarded = ['id'];
+    protected $guarded =['id'];
 
     public function getRouteKeyName(): string
     {
@@ -28,8 +26,13 @@ class Topic extends Model
         ];
     }
 
-    public function articles(): HasMany
+    public function productcategory()
     {
-        return $this->hasMany(Article::class);
+        return $this->belongsTo(ProductCategory::class, 'product_category_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
