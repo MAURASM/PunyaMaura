@@ -3,6 +3,7 @@
 namespace TestsFeature;
 
 use App\Models\User;
+use App\Models\UserInfo;
 use App\Models\UserType;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\RateLimiter;
@@ -29,9 +30,14 @@ class LoginTest extends TestCase
             ['name' => 'Supplier'],
         ]);
 
+        UserInfo::insert([
+            ['address' => 'Jl. Raya No. 2', 'phone' => '08123456789', 'bio' => 'Bio Supplier'],
+        ]);
+
         // Membuat pengguna
         $user = User::factory()->create([
             'user_type_id' => 1, // Dengan asumsi 1 adalah ID jenis pengguna yang valid
+            'user_info_id' => 1,
             'password' => bcrypt($password = 'i-love-laravel'),
         ]);
 
@@ -58,9 +64,14 @@ class LoginTest extends TestCase
             ['name' => 'Supplier'],
         ]);
 
+        UserInfo::insert([
+            ['address' => 'Jl. Raya No. 2', 'phone' => '08123456789', 'bio' => 'Bio Supplier'],
+        ]);
+
         // Membuat pengguna
         $user = User::factory()->create([
             'user_type_id' => 1, // Dengan asumsi 1 adalah ID jenis pengguna yang valid
+            'user_info_id' => 1,
             'password' => bcrypt('i-love-laravel'),
         ]);
 

@@ -4,35 +4,25 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Cviebrock\EloquentSluggable\Sluggable;
+use App\Models\ProductCategory;
 
 class Product extends Model
 {
-    use HasFactory, Sluggable;
+    use HasFactory;
 
-    protected $guarded =['id'];
+    protected $fillable = [
+        'product_name',
+        'product_quantity',
+        'product_normal_price',
+        'product_member_price',
+        'product_description',
+        'product_category_id',
+        'product_supplier_id',
+        'product_photo'
+    ];
 
-    public function getRouteKeyName(): string
+    public function ProductCategory()
     {
-        return 'slug';
-    }
-
-    public function sluggable(): array
-    {
-        return [
-            'slug' => [
-                'source' => 'name'
-            ]
-        ];
-    }
-
-    public function productcategory()
-    {
-        return $this->belongsTo(ProductCategory::class, 'product_category_id');
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(ProductCategory::class);
     }
 }

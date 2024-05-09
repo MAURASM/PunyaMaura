@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use App\Models\UserType;
+use App\Models\UserInfo;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
@@ -47,6 +48,7 @@ class RegistrationTest extends TestCase
             'password_confirmation' => 'password',
             'address' => '123 Test Street',
             'phone' => '1234567890',
+            'bio' => '',
         ];
 
         // Melakukan permintaan POST untuk mendaftarkan pengguna baru
@@ -67,9 +69,9 @@ class RegistrationTest extends TestCase
 
         // Memastikan info pengguna berhasil dibuat di database
         $this->assertDatabaseHas('user_infos', [
-            'user_id' => $user->id,
             'address' => '123 Test Street',
             'phone' => '1234567890',
+            'bio'=> '',
         ]);
 
 

@@ -20,8 +20,8 @@
                     <label for="user_type_id" class="form-label">Daftar sebagai :</label>
                     <select id="role" name="user_type_id" class="form-select" required>
                         <option value="" disabled selected hidden> </option>
-                        <option value="2">Reseller</option>
-                        <option value="3">Supplier</option>
+                        <option value="2">Supplier</option>
+                        <option value="3">Reseller</option>
                     </select>
                 </div>
 

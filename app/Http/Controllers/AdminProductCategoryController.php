@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\ProductCategory;
-use Cviebrock\EloquentSluggable\Services\SlugService;
+use Illuminate\Http\Request;
 
 class AdminProductCategoryController extends Controller
 {
@@ -34,14 +33,7 @@ class AdminProductCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|unique:product_categories',
-            'slug' => 'required|unique:product_categories'
-        ]);
-
-        ProductCategory::create($validatedData);
-
-        return redirect('/admin/product-categories')->with('success', 'New category has been created!');
+        //
     }
 
     /**
@@ -57,10 +49,7 @@ class AdminProductCategoryController extends Controller
      */
     public function edit(ProductCategory $productCategory)
     {
-        return view('admin.product-categories.edit', [
-            'title' => 'Edit Category',
-            'category' => $productCategory
-        ]);
+        //
     }
 
     /**
@@ -68,17 +57,7 @@ class AdminProductCategoryController extends Controller
      */
     public function update(Request $request, ProductCategory $productCategory)
     {
-        $rules = [
-            'name' => 'required|unique:product_categories',
-            'slug' => 'required|unique:product_categories'
-        ];
-
-        $validatedData = $request->validate($rules);
-
-        ProductCategory::where('id', $productCategory->id)
-            ->update($validatedData);
-
-        return redirect('/admin/product-categories')->with('success', 'Category has been updated!');
+        //
     }
 
     /**
@@ -86,14 +65,6 @@ class AdminProductCategoryController extends Controller
      */
     public function destroy(ProductCategory $productCategory)
     {
-        ProductCategory::destroy($productCategory->id);
-
-        return redirect('/admin/product-categories')->with('success', 'Category has been deleted!');
-    }
-
-    public function checkSlug(Request $request)
-    {
-        $slug = SlugService::createSlug(ProductCategory::class, 'slug', $request->name);
-        return response()->json(['slug' => $slug]);
+        //
     }
 }

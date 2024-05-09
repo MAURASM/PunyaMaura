@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Models\UserInfo;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
@@ -44,18 +44,14 @@ class RegisteredUserController extends Controller
         ]);
 
         // Membuat user baru dengan data yang telah divalidasi.
-        $user = User::create([
+        User::create([
             'name' => $request->name,
             'user_type_id' => $request->user_type_id,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-        ]);
-
-        // Membuat info user baru dengan data yang telah divalidasi dan ID dari user yang baru dibuat.
-        UserInfo::create([
-            'user_id' => $user->id,
             'address' => $request->address,
             'phone' => $request->phone,
+            'bio' => '',
         ]);
 
         // Setelah registrasi berhasil
